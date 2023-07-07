@@ -20,6 +20,7 @@ class teacher(QtWidgets.QMainWindow):
             print(kontrol)
             self.teacherData = teacherData(kontrol)
             self.teacherData.show()
+        
             
         
     def teacherBack(self):

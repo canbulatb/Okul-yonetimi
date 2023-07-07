@@ -12,12 +12,11 @@ class Ui(QtWidgets.QMainWindow):
     def studentOpen(self):
         self.student = student()
         self.student.show()
-        self.close()
-                
+        #self.close()         
     def teacherOpen(self):
         self.teacher = teacher()    
         self.teacher.show()
-        self.close()
+        #self.close()
 app = QtWidgets.QApplication([])
 window = Ui()
 window.show()

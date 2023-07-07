@@ -1,22 +1,15 @@
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+import sqlite3 
 
 def sorgula(sorgu):
-    database = QSqlDatabase.addDatabase('QSQLITE')
-    database.setDatabaseName('okulYonetimi.db')
-    if database.open():
-        print('Veritabanına bağlantı başarılı.')
-        query = QSqlQuery()
-        query.prepare(sorgu)    
-        query.exec_()
-    
-        while query.next():
-            id = query.value(0)
-            kullaniciAdi = query.value(1)
-            age = query.value(2)
-            isim=query.value(3)
-        print(isim)
-        database.close() 
-        return isim
+    conn = sqlite3.connect('okulYonetimi.db')
+    database = conn.cursor()
+    database.execute(sorgu)
+    conn.commit()
+    liste = database.fetchall()
+    print(liste)
+    database.close() 
+    return liste
 
 
 
@@ -24,7 +17,86 @@ def sorgula(sorgu):
 def okTeacherGiris(kullaniciAdi,sifre):
     sorgu='SELECT * FROM teacher WHERE kullanici_adi = \''+kullaniciAdi+'\' AND sifre = \''+sifre+'\''
     sonuc=sorgula(sorgu)
-    
+    return sonuc
+
+def okTeacherlessonWidget(kullanici):
+    sorgu="""SELECT ders_adi, class_adi, kapasite
+            FROM ogretmen_data
+            LEFT JOIN lesson on ogretmen_data.ders_id= lesson.id
+            LEFT JOIN teacher on ogretmen_data.teacher_id= teacher.id
+            where ogretmen_data.teacher_id="""+str(kullanici)
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def okRemoveComboboxVeri(kullanici):
+    sorgu="""SELECT ders_adi, class_adi, kapasite
+            FROM ogretmen_data
+            LEFT JOIN lesson on ogretmen_data.ders_id= lesson.id
+            LEFT JOIN teacher on ogretmen_data.teacher_id= teacher.id
+            where ogretmen_data.teacher_id="""+str(kullanici)
+    sonuc=sorgula(sorgu)
+       
     return sonuc
     
     
+def okAddComboboxVeri(kullanici):
+    sorgu="""SELECT id
+        FROM lesson
+        EXCEPT 
+        SELECT ders_id FROM ogretmen_data 
+        where teacher_id="""+str(kullanici)
+    sonuc=sorgula(sorgu)
+    
+    sorgu2="""SELECT * FROM lesson"""
+    sonuc2=sorgula(sorgu2)
+    yeniDers=[]
+    for i in range(len(sonuc2)):
+        for j in range(len(sonuc)):
+            if sonuc2[i][0]==sonuc[j][0]:
+                yeniDers.append(sonuc2[i][1])
+    print(yeniDers)
+    
+    return yeniDers
+    
+def studentListele(kullanici, ders):
+    sorgu="""SELECT ogrenci_adi
+        FROM ogrenci_data
+        LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
+        LEFT JOIN student on student.id= ogrenci_data.student_id
+        LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
+        where teacher.id="""+str(kullanici)+""" AND lesson.ders_adi=\""""+ders+"\""
+    sonuc=sorgula(sorgu)
+    return sonuc
+    
+    
+def studentInfo(kullanici, ogrenci,ders):
+    sorgu="""SELECT ogrenci_adi, ogrenci_cinsiyet, dogum_tarihi, ara_sinav, final, devamsizlik,student_id
+        FROM ogrenci_data
+        LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
+        LEFT JOIN student on student.id= ogrenci_data.student_id
+        LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
+        where teacher.id="""+str(kullanici)+""" AND lesson.ders_adi=\""""+ders+"""\"
+        AND ogrenci_adi=\""""+ogrenci+"""\""""
+    sonuc=sorgula(sorgu)
+    return sonuc
+    
+def studentEdit(self):
+    virgul=False
+    if self.midterm.text()!="":
+        v="ara_sinav="+self.midterm.text()
+        virgul=True
+    if self.final_2.text()!="":
+        f="final="+self.final_2.text()
+        if virgul:
+            f=", "+f
+        virgul=True
+    if self.attendance.text()!="":
+        d="devamsizlik="+self.attendance.text()
+        if virgul:
+            d=", "+d
+        
+        
+    k=self.aktifOgrenciId
+    sorgu="UPDATE ogrenci_data SET "+v+" "+f+" "+d+" WHERE id="+k
+    sonuc=sorgula(sorgu)
+    return sonuc
