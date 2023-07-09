@@ -10,6 +10,7 @@ class teacher(QtWidgets.QMainWindow):
         uic.loadUi('./ui/loginteacher.ui', self) 
         self.tloginbutton.clicked.connect(self.teacherDataCall)
         self.tbackbutton.clicked.connect(self.teacherBack)
+        self.teacherData = None        
     
         
     def teacherDataCall(self):
@@ -17,14 +18,23 @@ class teacher(QtWidgets.QMainWindow):
         sifre=self.tpasswordline.text()
         kontrol=okTeacherGiris(kullaniciAdi,sifre)
         if kontrol:
-            print(kontrol)
-            self.teacherData = teacherData(kontrol)
+            if self.teacherData is None:
+                self.teacherData = teacherData(kontrol)
+                self.teacherData.onceki_pencere = self 
+            #self.teacher = teacher()    
             self.teacherData.show()
+            self.hide()
+
         
-            
+    def closeEvent(self, event):
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()          
         
     def teacherBack(self):
-        self.hide()
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()
         
         
         #self.tloginbutton.clicked.connect(self.changeName) 

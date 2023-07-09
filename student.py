@@ -13,4 +13,11 @@ class student(QtWidgets.QMainWindow):
         self.studentData.show()
         
     def studentBack(self):
-        self.hide()
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()          
+        
+    def closeEvent(self, event):
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()          

@@ -79,7 +79,25 @@ def studentInfo(kullanici, ogrenci,ders):
         AND ogrenci_adi=\""""+ogrenci+"""\""""
     sonuc=sorgula(sorgu)
     return sonuc
-    
+
+def comboBoxAddLes(ders, kullanici):
+    dersSorgu="SELECT id FROM lesson WHERE ders_adi=\""+ders+"\""
+    dersSonuc=sorgula(dersSorgu)
+    sorgu="""INSERT INTO ogretmen_data (teacher_id,ders_id)
+            VALUES("""+str(kullanici)+""", """+str(dersSonuc[0][0])+"""); """
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def comboBoxRemoveLes(ders, kullanici):
+    dersSorgu="SELECT id FROM lesson WHERE ders_adi=\""+ders+"\""
+    dersSonuc=sorgula(dersSorgu)
+    sorgu="DELETE FROM ogretmen_data WHERE teacher_id="+str(kullanici)+" AND ders_id="+str(dersSonuc[0][0])
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+
+
+
 def studentEdit(self):
     virgul=False
     if self.midterm.text()!="":

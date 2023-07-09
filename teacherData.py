@@ -18,27 +18,51 @@ class teacherData(QtWidgets.QMainWindow):
         self.lesson_combo_2Add(kullanciAdi[0][0])
         
         
-        
+        self.remove_button_2.clicked.connect(self.comboBoxRemoveLesson)
         self.student_combo.currentTextChanged.connect(self.showStudentInfo)
         self.lesson_combo_2.currentTextChanged.connect(self.showStudents)
         self.edit_button.clicked.connect(self.showStudentEdit)
         self.show_button.clicked.connect(self.showStudentInfo)
         self.ok_button.clicked.connect(self.showStudents)
         self.closebutton.clicked.connect(self.teacherDataClose)
-        self.add_button.clicked.connect(self.comboBoxAdd)
+        self.add_button.clicked.connect(self.comboBoxAddLesson)
     
-    def comboBoxAdd(self):
-        pass
+    def comboBoxAddLesson(self):
+        ders=self.lesson_combo.currentText()
+        comboBoxAddLes(ders,self.kullaniciAdi)
+        veri=okTeacherlessonWidget(self.kullaniciAdi)
+        self.lessonWidgedFull(veri)
+        self.comboBoxRemove(self.kullaniciAdi)
+        self.comboBoxAdd(self.kullaniciAdi)
+
+    def comboBoxRemoveLesson(self):
+        ders=self.lesson_combo_6.currentText()
+        comboBoxRemoveLes(ders,self.kullaniciAdi)
+        veri=okTeacherlessonWidget(self.kullaniciAdi)
+        self.lessonWidgedFull(veri)
+        self.comboBoxRemove(self.kullaniciAdi)
+        self.comboBoxAdd(self.kullaniciAdi)
+
+
+
+    def closeEvent(self, event):
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()          
     
     def teacherDataClose(self):
-        self.hide()
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()         
 
     def comboBoxAdd(self,veri):
+        self.lesson_combo_6.clear()
         sonuc=okRemoveComboboxVeri(veri)
         for row in sonuc:
             self.lesson_combo_6.addItem(row[0])
 
     def comboBoxRemove(self,veri):
+        self.lesson_combo.clear()
         sonuc=okAddComboboxVeri(veri)
         for row in sonuc:
             self.lesson_combo.addItem(str(row))
