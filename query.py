@@ -13,7 +13,6 @@ def sorgula(sorgu):
 
 
 
-
 def okTeacherGiris(kullaniciAdi,sifre):
     sorgu='SELECT * FROM teacher WHERE kullanici_adi = \''+kullaniciAdi+'\' AND sifre = \''+sifre+'\''
     sonuc=sorgula(sorgu)
@@ -180,5 +179,11 @@ def ogrenciyiDerseEkle(kullanici,ogrenci,ders):
 def ogrenciyiDerstenCikar(kullanici,ogrenci,ders):
     sorgu="""DELETE FROM ogrenci_data WHERE ders_id="""+str(ders)+"""
         AND student_id="""+str(ogrenci)
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+
+def okStudentGiris(ogrenciNo,sifre):
+    sorgu='SELECT * FROM student WHERE ogrenci_no = \''+ogrenciNo+'\' AND sifre = \''+sifre+'\''
     sonuc=sorgula(sorgu)
     return sonuc

@@ -1,5 +1,9 @@
 from PyQt5 import QtWidgets, uic
+from teacherData import *
+from query import *
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from studentData import *
+
 
 class student(QtWidgets.QMainWindow):
     def __init__(self):
@@ -7,12 +11,22 @@ class student(QtWidgets.QMainWindow):
         uic.loadUi('./ui/loginstudent.ui', self)     
         self.sloginbutton.clicked.connect(self.studentDataCall)
         self.sbackbutton.clicked.connect(self.studentBack)
+        self.studentData = None    
 
 
     def studentDataCall(self):
-        self.studentData = studentData()
-        self.studentData.show()
+        ogrenciNo = self.snumberline.text()
+        sifre=self.spasswordline.text()
+        kontrol=okStudentGiris(ogrenciNo,sifre)
+        if kontrol:
+            if self.studentData is None:
+                self.studentData = studentData(kontrol)
+                self.studentData.onceki_pencere = self 
+            #self.teacher = teacher()    
+            self.studentData.show()
+            self.hide()
         
+            
     def studentBack(self):
         if self.onceki_pencere is not None:
             self.onceki_pencere.show()
