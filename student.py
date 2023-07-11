@@ -8,6 +8,7 @@ class student(QtWidgets.QMainWindow):
         self.sloginbutton.clicked.connect(self.studentDataCall)
         self.sbackbutton.clicked.connect(self.studentBack)
 
+
     def studentDataCall(self):
         self.studentData = studentData()
         self.studentData.show()

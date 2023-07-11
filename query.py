@@ -75,7 +75,7 @@ def studentInfo(kullanici, ogrenci,ders):
         LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
         LEFT JOIN student on student.id= ogrenci_data.student_id
         LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
-        where teacher.id="""+str(kullanici)+""" AND lesson.ders_adi=\""""+ders+"""\"
+        WHERE teacher.id="""+str(kullanici)+""" AND lesson.ders_adi=\""""+ders+"""\"
         AND ogrenci_adi=\""""+ogrenci+"""\""""
     sonuc=sorgula(sorgu)
     return sonuc
@@ -116,5 +116,69 @@ def studentEdit(self):
         
     k=self.aktifOgrenciId
     sorgu="UPDATE ogrenci_data SET "+v+" "+f+" "+d+" WHERE id="+k
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def lessonAddRemoveQuery(kullaniciAdi):
+    sorgu="""SELECT teacher_id, ders_adi
+        FROM ogretmen_data
+        LEFT JOIN lesson on lesson.id = ogretmen_data.ders_id"""
+        #WHERE teacher_id="""+str(kullaniciAdi)
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def showStudentLessonQuery(ders,kullaniciAdi):
+    sorgu="""SELECT ogrenci_adi,  student_id
+        FROM ogrenci_data
+        LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
+        LEFT JOIN student on student.id= ogrenci_data.student_id
+        LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
+		WHERE teacher_id=\""""+str(kullaniciAdi)+"\" AND ders_adi=\""+ders+"\""
+    sonuc=sorgula(sorgu)
+    print(sonuc)
+    return sonuc
+
+
+def ogrencileriGetir():
+    sorgu="""SELECT id, ogrenci_adi FROM student"""
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def ogrenciDersiAliyormu(kullaniciAdi,ogrenci,ders):
+    sorgu="""SELECT ogrenci_adi,  student_id
+        FROM ogrenci_data
+        LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
+        LEFT JOIN student on student.id= ogrenci_data.student_id
+        LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
+        WHERE ders_adi=\""""+ders+"\""+"AND student_id="+str(ogrenci)
+		#WHERE teacher_id="""+str(kullaniciAdi)+" AND ders_adi=\""+ders+"\""+"AND student_id="+str(ogrenci)
+    sonuc=sorgula(sorgu)
+    print(sonuc)
+    return sonuc
+
+def dersKapasitesi(ders):
+    sorgu="SELECT id, ders_adi, kapasite FROM lesson WHERE ders_adi=\""+ders+"\""
+    sonuc=sorgula(sorgu)
+    return sonuc
+def kayitliOgrenciSayisi(ders):
+    sorgu="""SELECT COUNT (ders_adi)
+        FROM ogrenci_data
+        LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
+        LEFT JOIN student on student.id= ogrenci_data.student_id
+        LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
+        WHERE ders_adi=\""""+ders+"\""
+    sonuc=sorgula(sorgu)
+    print(sonuc)
+    return sonuc
+
+def ogrenciyiDerseEkle(kullanici,ogrenci,ders):
+    sorgu="""INSERT INTO ogrenci_data (teacher_id,student_id, ders_id)
+            VALUES("""+str(kullanici)+", "+str(ogrenci)+", "+str(ders)+"); "
+    sonuc=sorgula(sorgu)
+    return sonuc
+
+def ogrenciyiDerstenCikar(kullanici,ogrenci,ders):
+    sorgu="""DELETE FROM ogrenci_data WHERE ders_id="""+str(ders)+"""
+        AND student_id="""+str(ogrenci)
     sonuc=sorgula(sorgu)
     return sonuc
