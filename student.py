@@ -21,7 +21,7 @@ class student(QtWidgets.QMainWindow):
         if kontrol:
             if self.studentData is None:
                 self.studentData = studentData(kontrol)
-                self.studentData.onceki_pencere = self 
+                self.studentData.onceki_pencere = self.onceki_pencere
             #self.teacher = teacher()    
             self.studentData.show()
             self.hide()
@@ -30,9 +30,9 @@ class student(QtWidgets.QMainWindow):
     def studentBack(self):
         if self.onceki_pencere is not None:
             self.onceki_pencere.show()
-        self.close()          
+        self.hide()          
         
     def closeEvent(self, event):
         if self.onceki_pencere is not None:
             self.onceki_pencere.show()
-        self.close()          
+        self.hide()          

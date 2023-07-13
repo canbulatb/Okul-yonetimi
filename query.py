@@ -69,7 +69,7 @@ def studentListele(kullanici, ders):
     
     
 def studentInfo(kullanici, ogrenci,ders):
-    sorgu="""SELECT ogrenci_adi, ogrenci_cinsiyet, dogum_tarihi, ara_sinav, final, devamsizlik,student_id
+    sorgu="""SELECT ogrenci_adi, ogrenci_cinsiyet, dogum_tarihi, ara_sinav, final, devamsizlik,ogrenci_data.id
         FROM ogrenci_data
         LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
         LEFT JOIN student on student.id= ogrenci_data.student_id

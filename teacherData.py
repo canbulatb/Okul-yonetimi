@@ -4,29 +4,22 @@ from query import *
 from PyQt5.QtWidgets import QMessageBox
 
 class teacherData(QtWidgets.QMainWindow): 
-    def __init__(self,kullanciBilgisi):
+    def __init__(self):
         #veri=[["Matematik","10 A","30"],["Fizik","10 A","30"],["Kimya","10 A","30"],["Biyoloji","10 A","30"],["Matematik","10 A","30"]]
         super(teacherData, self).__init__()
         uic.loadUi('./ui/teacher1.ui', self)
-        self.tname_label.setText(kullanciBilgisi[0][3])
-        self.aktifOgrenciId=""
-        veri=okTeacherlessonWidget(kullanciBilgisi[0][0])
-        self.kullaniciAdi=kullanciBilgisi[0][0]
-        self.lessonWidgedFull(veri)
-        self.comboBoxAdd(kullanciBilgisi[0][0])
-        self.comboBoxRemove(kullanciBilgisi[0][0])
-        self.lesson_combo_2Add(kullanciBilgisi[0][0])
-        self.lessonAddRemove()
+       
         
         self.studentAdd=[]
         self.surdentRemove=[]
+
         
         
         
         
         self.remove_button_2.clicked.connect(self.comboBoxRemoveLesson)
-        self.student_combo.currentTextChanged.connect(self.showStudentInfo)
-        self.lesson_combo_2.currentTextChanged.connect(self.showStudents)
+        #self.student_combo.currentTextChanged.connect(self.showStudentInfo)
+        #self.lesson_combo_2.currentTextChanged.connect(self.showStudents)
         self.edit_button.clicked.connect(self.showStudentEdit)
         self.show_button.clicked.connect(self.showStudentInfo)
         self.ok_button.clicked.connect(self.showStudents)
@@ -37,6 +30,10 @@ class teacherData(QtWidgets.QMainWindow):
         self.add_button_2.clicked.connect(self.addStudentLesson)
         self.remove_button.clicked.connect(self.removeStudentLesson)
     
+    def closeEvent(self, event):
+        if self.onceki_pencere is not None:
+            self.onceki_pencere.show()
+        self.close()   
     
     
     
