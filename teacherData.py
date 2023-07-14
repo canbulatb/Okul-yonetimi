@@ -90,9 +90,12 @@ class teacherData(QtWidgets.QMainWindow):
             self.lesson_widget.setItem(i, 0, QTableWidgetItem(str(veri[i][0])))
             self.lesson_widget.setItem(i, 1, QTableWidgetItem(str(veri[i][1])))
             self.lesson_widget.setItem(i, 2, QTableWidgetItem(str(veri[i][2])))
+        self.lesson_combo_2Add(veri)
+        self.lessonAddRemove()
     
     def lesson_combo_2Add(self, veri):
-        sonuc=okRemoveComboboxVeri(veri)
+        self.lesson_combo_2.clear()
+        sonuc=okRemoveComboboxVeri(self.kullaniciAdi)
         for row in sonuc:
             self.lesson_combo_2.addItem(str(row[0]))
 
@@ -139,6 +142,8 @@ class teacherData(QtWidgets.QMainWindow):
         
     def lessonAddRemove(self):
         self.lesson_combo_4.clear()
+        self.lesson_combo_5.clear()
+        
         liste=lessonAddRemoveQuery(self.kullaniciAdi)
         for i in liste:
             if i[0] ==  self.kullaniciAdi:

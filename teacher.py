@@ -8,6 +8,7 @@ class teacher(QtWidgets.QMainWindow):
     def __init__(self):
         super(teacher, self).__init__()
         uic.loadUi('./ui/loginteacher.ui', self) 
+        
         self.usernameline.setText("")
         self.tpasswordline.setText("")
         

@@ -224,19 +224,6 @@ QPushButton::pressed{
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>200</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
    <zorder>label</zorder>
    <zorder>sloginbutton</zorder>
    <zorder>snumberline</zorder>
@@ -245,7 +232,6 @@ QPushButton::pressed{
    <zorder>message</zorder>
    <zorder>label_2</zorder>
    <zorder>label_3</zorder>
-   <zorder>pushButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -253,7 +239,7 @@ QPushButton::pressed{
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

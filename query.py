@@ -98,17 +98,25 @@ def comboBoxRemoveLes(ders, kullanici):
 
 
 def studentEdit(self):
-    virgul=False
-    if self.midterm.text()!="":
-        v="ara_sinav="+self.midterm.text()
-        virgul=True
-    if self.final_2.text()!="":
-        f="final="+self.final_2.text()
+    virgul=True
+    v="ara_sinav="+self.midterm.text()
+    if v=="ara_sinav=None":
+        v=""
+        virgul=False
+        
+    f="final="+self.final_2.text()
+    if f=="final=None":
+        f=""
+        virgul=False
+    else:
         if virgul:
             f=", "+f
         virgul=True
-    if self.attendance.text()!="":
-        d="devamsizlik="+self.attendance.text()
+    
+    d="devamsizlik="+self.attendance.text()
+    if d=="devamsizlik=None":
+        d=""
+    else:   
         if virgul:
             d=", "+d
         
@@ -127,14 +135,13 @@ def lessonAddRemoveQuery(kullaniciAdi):
     return sonuc
 
 def showStudentLessonQuery(ders,kullaniciAdi):
-    sorgu="""SELECT ogrenci_adi,  student_id
+    sorgu="""SELECT ogrenci_adi, student_id
         FROM ogrenci_data
         LEFT JOIN teacher on teacher.id= ogrenci_data.teacher_id 
         LEFT JOIN student on student.id= ogrenci_data.student_id
         LEFT JOIN lesson on lesson.id= ogrenci_data.ders_id
 		WHERE teacher_id=\""""+str(kullaniciAdi)+"\" AND ders_adi=\""+ders+"\""
     sonuc=sorgula(sorgu)
-    print(sonuc)
     return sonuc
 
 

@@ -13,16 +13,14 @@ class Ui(QtWidgets.QMainWindow):
 
 
     def studentOpen(self):
-        if self.student is None:
-            self.student = student()
-            self.student.onceki_pencere = self 
+        self.student = student()
+        self.student.onceki_pencere = self 
         self.student.__init__()
         self.student.show()
         self.hide()         
     def teacherOpen(self):
-        if self.teacher is None:
-            self.teacher = teacher()
-            self.teacher.onceki_pencere = self 
+        self.teacher = teacher()
+        self.teacher.onceki_pencere = self 
         #self.teacher = teacher()    
         self.student.__init__()
         self.teacher.show()
